@@ -1,0 +1,5 @@
+{"cell": "AGEN-FIX", "trial": 1, "wall_ms": 15094.5, "ok": true, "answer": "def total(xs):\n    return sum(xs)", "session": "20260821-145420.jsonl"}
+{"cell": "AGEN-FIX", "trial": 2, "wall_ms": 17119.9, "ok": true, "answer": "```python\ndef total(xs):\n    return sum(xs)\n```", "session": "20260821-145435.jsonl"}
+{"cell": "AGEN-FIX", "trial": 3, "wall_ms": 12733.7, "ok": true, "answer": "```python\ndef total(xs):\n    return sum(xs)\n```", "session": "20260821-145452.jsonl"}
+{"cell": "AGEN-FIX", "trial": 4, "wall_ms": 9367.6, "ok": true, "answer": "def total(xs):\n    return sum(xs)", "session": "20260821-145505.jsonl"}
+{"cell": "AGEN-FIX", "trial": 5, "wall_ms": 13952.1, "ok": true, "answer": "def total(xs):\n    return sum(xs)", "session": "20260821-145514.jsonl"}
