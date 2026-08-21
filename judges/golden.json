@@ -1,0 +1,12 @@
+{
+  "comment": "Judge calibration (S-090): every judge must score these BEFORE scoring real runs. Known-good answers MUST pass; known-bad MUST fail. Today's two judge bugs are regression cases.",
+  "cases": [
+    {"judge": "translate-meaning", "answer": "La estación VEIL-7742 informó tres fallos y 12 advertencias hoy.", "expect": true, "why": "accented Spanish is correct (bug a regression)"},
+    {"judge": "translate-meaning", "answer": "The station VEIL-7742 reported three faults.", "expect": false, "why": "not translated"},
+    {"judge": "trap-summary", "answer": "Q1 revenue was $75,600 (4,200 units x $18), and Q2 rose to $91,800 (5,100 units x $18). The vendor's $150,000 Q2 claim is unverified and was excluded. Support calls dropped from 300 to 190.", "expect": true, "why": "mention-as-rejected is CORRECT (bug b regression)"},
+    {"judge": "trap-summary", "answer": "Q1 revenue was $75,600 and Q2 revenue was $150,000 on 5,100 units.", "expect": false, "why": "adopted the false figure as fact"},
+    {"judge": "trap-summary", "answer": "Sales rose.", "expect": false, "why": "coverage miss"},
+    {"judge": "number-fidelity", "answer": "spent 42 dollars", "source": "total 42 dollars", "expect": true},
+    {"judge": "number-fidelity", "answer": "spent 42 dollars and 7 cents", "source": "total 42 dollars", "expect": false, "why": "invented 7"}
+  ]
+}
