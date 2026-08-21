@@ -1,0 +1,1 @@
+{"cell": "C1-S", "class": "CODE-WRITE", "ladder_point": 1, "task": {"prompt": "Write a Python function rms(nums) returning the root-mean-square of a list. Return only code.", "expect": {"hidden_tests": ["assert abs(rms([3,4])-3.5)<1e-9", "assert rms([])==0"]}}, "note": "hidden tests never shown to the product; oracle lives in oracles/"}
