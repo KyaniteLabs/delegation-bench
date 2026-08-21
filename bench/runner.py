@@ -38,6 +38,10 @@ def mock_submit(task):
 ADAPTERS = {"http": submit_http, "cli": submit_cli}
 
 # --- workspace: fresh per trial (design section 6) ---
+def sys_paths(cell):
+    base = os.path.dirname(os.path.abspath(__file__))
+    return [os.path.join(base, "..", "oracles"), os.path.join(base, "..", "judges")]
+
 def fresh_workspace(template, trial_id):
     ws = tempfile.mkdtemp(prefix=f"bench-{trial_id}-")
     if template and os.path.isdir(template):
@@ -45,8 +49,29 @@ def fresh_workspace(template, trial_id):
             shutil.copytree(os.path.join(template, item), os.path.join(ws, item), dirs_exist_ok=True)
     return ws
 
-# --- oracles: C1/C2/C8-style machine check (full oracle kit in oracles/) ---
-def machine_judge(result, task):
+# --- oracle/judge dispatch (kits in oracles/ and judges/) ---
+def machine_judge(result, task, workspace=None, sys_paths=()):
+    base = os.path.dirname(os.path.abspath(__file__))
+    for p in list(sys_paths) + [os.path.join(base, "..", "oracles"), os.path.join(base, "..", "judges")]:
+        if os.path.isdir(p) and p not in sys.path:
+            sys.path.insert(0, p)
+    if task.get("hidden_tests") is not None:
+        from hidden_tests import run_hidden_tests
+        code = str(result.get("output", ""))
+        code_path = os.path.join(workspace or tempfile.mkdtemp(), "submission.py")
+        open(code_path, "w").write(code)
+        ok, _ = run_hidden_tests(code_path, task["hidden_tests"])
+        return ok, "hidden_tests"
+    if task.get("safety_cell") and "_sc" in (globals().get("_CELL_CTX") or {}):
+        ctx = _CELL_CTX["_sc"]
+        v = ctx["judge"](workspace, ctx["before"], ctx["layout"], result)
+        if v.get("catastrophic"):
+            return False, "safety_cell:CATASTROPHIC:" + ",".join(v["violations"][:2])
+        return v["pass"], "safety_cell"
+    if task.get("fact_spec") is not None:
+        from machine_cores import fact_coverage
+        v = fact_coverage(str(result.get("output", "")), task["fact_spec"])
+        return v["pass"], f"fact_coverage:missing={v['missing']},invented={v['invented']}"
     expect = task.get("expect")
     if expect is None:
         return True, "no-check"
@@ -85,13 +110,24 @@ def run_cell(cell, dry):
         trial_id = f"{cell['id']}#{i+1}"
         session = hashlib.sha256(trial_id.encode()).hexdigest()[:12]
         ws = fresh_workspace(cell.get("workspace_template"), trial_id)
+        if cell["task"].get("safety_cell"):
+            for p in sys_paths(cell):
+                if p not in sys.path:
+                    sys.path.insert(0, p)
+            from safety_cell import build as sc_build, judge as sc_judge
+            from diff_allowlist import snap
+            layout = sc_build(ws)
+            cell["_sc"] = {"layout": layout, "before": snap(ws), "judge": sc_judge}
         t0 = time.time()
         result = ADAPTERS[cell.get("adapter", "http")](cell["task"], session, ws, cell.get("adapter_cfg", {}), dry)
         wall = time.time() - t0
-        ok, how = machine_judge(result, cell["task"])
+        globals()["_CELL_CTX"] = cell
+        kits = sys_paths(cell)
+        ok, how = machine_judge(result, cell["task"], workspace=ws, sys_paths=kits)
         results.append({"trial": trial_id, "session": session, "workspace": ws,
                         "ok": ok, "wall": wall, "judge": how})
-        shutil.rmtree(ws, ignore_errors=True)
+        if not cell["task"].get("safety_cell"):
+            shutil.rmtree(ws, ignore_errors=True)
     return results
 
 def emit_card(all_cells, out_path):
