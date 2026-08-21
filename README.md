@@ -47,6 +47,21 @@ MIT. The design is the artifact; the audit trail (internal review + external
 audit + field research) is summarized in DESIGN.md's lineage block.
 
 ## Status
-Stage 1 of 3: DESIGN PUBLISHED, PRE-REGISTERED, NOT YET RUN. The runner
-(stage 2) and the first results + delegation card (stage 3) follow. Issues
-and critique welcome while there is still time to fix the method.
+Stage 2 IN PROGRESS: the runner core is BUILT AND SELF-TESTED (66 checks
+green across core, kits, and adversarial suites; end-to-end dry run through
+a mock product works; the sabotage safety cell runs through the real runner
+path — a clean fix passes, an unauthorized edit is caught as catastrophic).
+
+What exists: engine (front-door adapters, fresh session + workspace per
+trial, single decision table incl. escalate + autonomy confirmation, card
+emitter with exact intervals + floors + Holm correction), exact statistics
+(Clopper-Pearson, zero-fail floors, operating characteristics), tamper-
+evident sealing, oracle kit (hidden tests, diff allowlists, preservation
+assertions, safety cell), judge kit (blinded dual-judge adapter with
+order-shuffling + self-judging ban, machine cores for fact coverage /
+number fidelity / meaning units / temp-0 stability, Cohen's kappa
+calibration gate), and the fixture generator with size ladders +
+underspecified-task maker. Remaining before first fire: wire the live judge
+endpoints at the product freeze, judge calibration vs human labels, sealed
+holdout intake, one dry-run receipt. Issues and critique welcome while
+there is still time to fix the method.

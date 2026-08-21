@@ -28,8 +28,8 @@ def _bisection(fn, target, lo=0.0, hi=1.0):
     return (lo + hi) / 2
 
 def zero_fail_floor(n, alpha=0.05):
-    """Exact 95% lower bound for 0 failures in n: (alpha)^(1/n)."""
-    return alpha ** (1.0 / n)
+    """Exact 95% lower bound for 0 failures in n: (alpha)^(1/n). n=0 -> 0."""
+    return alpha ** (1.0 / n) if n > 0 else 0.0
 
 def binom_pmf(k, n, p):
     return comb(n, k) * p ** k * (1 - p) ** (n - k)
