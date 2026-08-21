@@ -9,7 +9,7 @@ TF = os.path.join(LIAM, "tokflint.py")
 SESS = os.path.expanduser("~/.local/share/liam/sessions")
 FIX = os.path.expanduser("~/workspaces/qwen38-27b-strix-halo/results/vision-real-2026-08-20/fixtures")
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "results", "vision-cells-2026-08-22.jsonl")
-N = 5
+N = int(os.environ.get("BENCH_N", "5"))
 
 CELLS = [
     ("V-BAR",  f"{FIX}/bar-chart.png",  "Which product has the highest revenue in this chart? Reply with the product name only.", "beta"),
@@ -59,3 +59,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+# N override for escalation: BENCH_N env
