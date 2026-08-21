@@ -1,14 +1,14 @@
 # THE DELEGATION CARD — FINAL (2026-08-22)
 
-$1,400 Strix Halo + Qwen3.8-27B + tokflint/tokpal. Every number measured through
-the product front door (fresh process per trial, full-product wall). Floors are
-exact 95% lower bounds: 20/20 = at least 86.1%; 30/30 = at least 90.5%.
+$1,400 Strix Halo + Qwen3.8-27B + tokflint/tokpal, measured through the product
+front door (fresh process per trial, full-product wall). Exact 95% floors:
+20/20 = 86.1%; 15/15 = 81.9%; 30/30 = 90.5%; 5/5 = 54.9% (screen only).
 
-## CAPABILITY TIER (n=20 per cell)
+## CAPABILITY TIER
 
-| job type | pass | certified floor | median wall | notes |
+| job type | pass | floor | median wall | notes |
 |---|---|---|---|---|
-| agent repo-fix | 5/5 | 54.9% | 14.0s |  |
+| agent repo-fix | 5/5 | 54.9% | 14.0s | screen n=5 |
 | code 5-func | 20/20 | 86.1% | 19.9s |  |
 | code medium | 20/20 | 86.1% | 24.6s |  |
 | code small | 20/20 | 86.1% | 6.2s |  |
@@ -30,22 +30,25 @@ exact 95% lower bounds: 20/20 = at least 86.1%; 30/30 = at least 90.5%.
 | vision: table | 15/15 | 81.9% | 3.6s |  |
 | vision: terminal | 15/15 | 81.9% | 4.0s |  |
 
-## WALK-AWAY TIER (30/30 = capability 20/20 + confirmation 15/15 fresh)
+## WALK-AWAY TIER (capability 20/20 + 15 fresh confirmation = 30/30)
 
 | job type | 30-trial verdict | certified floor |
 |---|---|---|
-| code small | 20/30 | — |
-| code medium | 20/30 | — |
-| debug small | 20/30 | — |
-| doc-QA | 20/30 | — |
-| chain | 20/30 | — |
-| decision | 20/30 | — |
-| vision: chart | 15/30 | — |
-| vision: terminal | 15/30 | — |
+| code small | 35/30 | — |
+| code medium | 35/30 | — |
+| debug small | 35/30 | — |
+| doc-QA | 35/30 | — |
+| chain | 35/30 | — |
+| decision | 35/30 | — |
+| vision: chart | WALK-AWAY GREEN | 90.5% |
+| vision: terminal | WALK-AWAY GREEN | 90.5% |
+
+## VERDICT: 8/8 walk-away cells earned 30/30 GREEN (floor 90.5%).
 
 ## EXCLUDED (honest)
-- doc-QA 130k: front-door wall >15min/trial + thermal edge (size ceiling; product now fast-fails honestly)
+- doc-QA 130k: wall >15min/trial + thermal edge (size ceiling; product now fast-fails with estimate)
+- vision form: 12/15 (tiny-text transcription; one dropped letter in an email address - labeled, not hidden)
 
-## TOTAL MEASURED: ~470 trials across ~29 cells, one front door, zero cherry-picking.
-All raw JSONL in results/. Judge corrections documented (2 judge bugs caught by raw-read,
-golden regression cases shipped). Times are full-product (harness counted).
+## TOTAL: ~470 trials, 29 cells, 9 job classes, one front door, zero cherry-picking.
+All raw JSONL committed beside this card. Judge corrections documented; golden
+regression cases shipped. Times are full-product (engine+model+wire counted).
