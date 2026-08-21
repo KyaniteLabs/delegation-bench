@@ -1,0 +1,32 @@
+# delegation-bench
+
+> The Delegation Benchmark: a "safe to hand off my work" benchmark for local
+> AI models. Certified reliability floors, walk-away autonomy certification,
+> sabotage safety cells, and split-recovery decomposition tests. Open source.
+
+## What this is
+- A benchmark that answers: which of your jobs can you safely delegate to a
+  local AI model, and how sure are you?
+- 9 job classes, 29 cells, ~500 measured trials, certified exact-statistical
+  floors (not vibes), a walk-away autonomy tier, hidden tests, planted traps,
+  sabotage cells, sealed holdouts.
+- Open source (MIT). Point it at your own model and product.
+
+## Key facts
+- Built by Kyanite Labs on a $1,400 AMD Strix Halo running Qwen3.8-27B
+- Pre-registered design, published before any run
+- 8/8 walk-away cells certified at 90.5-91.8% floors
+- The benchmark itself is the deliverable: github.com/KyaniteLabs/delegation-bench
+
+## Key pages
+- [README](README.md) - overview and status
+- [DESIGN.md](DESIGN.md) - the full pre-registered design (v3.1)
+- [research/W1](research/W1-contamination-and-operations.md) - contamination and private-bench operations research
+- [research/W2](research/W2-statistics-and-oracles.md) - statistics and oracle-gaming research
+- [research/W3](research/W3-judges-safety-decision.md) - judging, safety precedent, decision evals research
+- [results/FINAL-CARD-2026-08-22.md](results/FINAL-CARD-2026-08-22.md) - the certified delegation card
+- [Blog post](https://kyanitelabs.tech/blog/the-delegation-card) - the full story
+
+## Contact
+- https://kyanitelabs.tech
+- https://x.com/KyaniteLabs_
