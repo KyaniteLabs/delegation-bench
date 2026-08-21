@@ -2,7 +2,7 @@
 
 $1,400 Strix Halo + Qwen3.8-27B + tokflint/tokpal, measured through the product
 front door (fresh process per trial, full-product wall). Exact 95% floors:
-20/20 = 86.1%; 15/15 = 81.9%; 30/30 = 90.5%; 5/5 = 54.9% (screen only).
+5/5=54.9% (screen); 15/15=81.9%; 20/20=86.1%; 35/35=91.8%.
 
 ## CAPABILITY TIER
 
@@ -30,20 +30,21 @@ front door (fresh process per trial, full-product wall). Exact 95% floors:
 | vision: table | 15/15 | 81.9% | 3.6s |  |
 | vision: terminal | 15/15 | 81.9% | 4.0s |  |
 
-## WALK-AWAY TIER (capability 20/20 + 15 fresh confirmation = 30/30)
+## WALK-AWAY TIER (capability runs + 15 fresh confirmation runs, all independent)
 
-| job type | 30-trial verdict | certified floor |
+| job type | total verdict | certified floor |
 |---|---|---|
-| code small | 35/30 | — |
-| code medium | 35/30 | — |
-| debug small | 35/30 | — |
-| doc-QA | 35/30 | — |
-| chain | 35/30 | — |
-| decision | 35/30 | — |
+| code small | WALK-AWAY GREEN | 91.8% |
+| code medium | WALK-AWAY GREEN | 91.8% |
+| debug small | WALK-AWAY GREEN | 91.8% |
+| doc-QA | WALK-AWAY GREEN | 91.8% |
+| chain | WALK-AWAY GREEN | 91.8% |
+| decision | WALK-AWAY GREEN | 91.8% |
 | vision: chart | WALK-AWAY GREEN | 90.5% |
 | vision: terminal | WALK-AWAY GREEN | 90.5% |
 
-## VERDICT: 8/8 walk-away cells earned 30/30 GREEN (floor 90.5%).
+## VERDICT: 8/8 walk-away cells GREEN at n>=30 (floors 90.5-91.8%).
+The machine earned walk-away certification on every representative cell tested.
 
 ## EXCLUDED (honest)
 - doc-QA 130k: wall >15min/trial + thermal edge (size ceiling; product now fast-fails with estimate)
