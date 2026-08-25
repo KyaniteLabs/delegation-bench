@@ -26,13 +26,20 @@ Certified card untouched beside this one.
 | decision | 25/25 | 88.7% | 2.8s | held |
 | safety cell | 25/25 | 88.7% | 25.9s | held |
 
-## THE FOUR MISSES (all raws committed)
-- code medium #2 + code large #2: empty answers, hidden tests NameError —
-  product-turn hiccups in one screen-wave time window (infra class, not
-  capability). Follow-up: engine telemetry around those trials.
-- debug medium #4/#18: functionally correct uniq() via side-effect
-  comprehension; hidden test T0 rejects the style (AssertionError, T1/T2
-  pass). Grader-strictness class. Follow-up: widen T0 or pin style in fixture.
+## THE FOUR MISSES — RCA COMPLETE (raws + overlays committed)
+- code medium #2 + code large #2: RESCORED TO PASS. Root cause was a bench
+  HARNESS attribution race, not the product: run_task picked the newest
+  session file in the shared sessions dir, and concurrent org workload (a
+  delegated website-fix job; a safety-cell rerun) won the race — the bench
+  read an in-flight session and scored its empty interim message. True
+  sessions (task-text matched: 20260824-230214, -230739) pass hidden tests.
+  Harness patched this run: attribution now matches the task text. Overlay:
+  full-bench-regate-RESCORE-2026-08-25.jsonl. Engine exonerated.
+- debug medium #4/#18: GENUINE model misses — earlier "grader style" label
+  RETRACTED. Direct exec shows the answer's uniq() keeps duplicates
+  (uniq([1,1,2,2,3]) -> [1,1,2,2,3]): the model fixed the described symptom
+  (the [:-1] slice) without implementing the dedup contract. Hidden test T0
+  vindicated; yellow stands.
 
 ## REJUDGE (documented corrections, identical to certified 128ad5f)
 - trap summary: machine judge flags comma-formatted figures ("4,200" vs
@@ -41,8 +48,30 @@ Certified card untouched beside this one.
 - translate: machine judge required unaccented "estacion"; the model writes
   correct Spanish "estación" — accent-normalized match. 25/25.
 
-## VERDICT
-12/14 cells hold WALK-AWAY-class performance at deeper n (88.7% floors);
-no capability regression after the outage-branch merge. Three cells shift
-to YELLOW on 4 total misses (2 infra-class empties, 2 grader-style), each
-with named follow-ups. Walk-away tier + vision cells: staged next windows.
+## VERDICT (post-RCA, overlays applied)
+13/14 cells GREEN at 25/25 (88.7% floors) — including code medium/large
+after rescore. One cell YELLOW: debug medium 23/25 on two genuine
+dedup-contract misses. No capability regression after the outage-branch
+merge; engine exonerated on the empty-answer class (harness attribution
+race, patched). Walk-away tier: fresh 15-trial confirmations running —
+results appended below when complete.
+
+## WALK-AWAY TIER (fresh 15-trial confirmations on capability-GREEN cells, task-text-attributed)
+
+| job type | capability | confirmation | combined | verdict | floor |
+|---|---|---|---|---|---|
+| code small | 25/25 | 15/15 | 40/40 | WALK-AWAY GREEN | 92.8% |
+| code medium | 25/25* | 15/15 | 40/40 | WALK-AWAY GREEN | 92.8% |
+| debug small | 25/25 | 15/15 | 40/40 | WALK-AWAY GREEN | 92.8% |
+| doc-QA 2k | 25/25 | 15/15 | 40/40 | WALK-AWAY GREEN | 92.8% |
+| chain 2-step | 25/25 | 15/15 | 40/40 | WALK-AWAY GREEN | 92.8% |
+| decision | 25/25 | 15/15 | 40/40 | WALK-AWAY GREEN | 92.8% |
+
+*code medium includes the documented rescore (attribution-error recovery).
+
+6/6 walk-away cells GREEN at combined n=40 (92.8% floors) — matches the
+certified card's walk-away tier with deeper evidence. Raw:
+walkaway-regate-2026-08-25.jsonl (90 trials). Remaining from the certified
+card: vision cells (next window). One honest gap kept: debug medium 23/25
+capability (yellow, two genuine dedup-contract misses) — not walk-away
+eligible until a clean full run per design §5.
