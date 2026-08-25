@@ -75,3 +75,12 @@ walkaway-regate-2026-08-25.jsonl (90 trials). Remaining from the certified
 card: vision cells (next window). One honest gap kept: debug medium 23/25
 capability (yellow, two genuine dedup-contract misses) — not walk-away
 eligible until a clean full run per design §5.
+
+## VISION RE-GATE (2026-08-25 ~16:3xZ, CTO-028; card section added night-of by CTO-8)
+
+Raw: vision-cells-regate-2026-08-25.jsonl (30 trials, n=5/cell, front door):
+V-BAR 5/5, V-LINE 5/5, V-PROG 5/5, V-TAB 5/5, V-TERM 5/5, V-FORM 4/5.
+5/6 cells green — V-FORM = the certified OCR near-miss class (tiny print),
+labeled honestly, matching the certified card's form-cell finding.
+Combined re-gate total: 350 capability + 90 walk-away + 30 vision = 470 trials;
+grand total with the certified run: 965.
