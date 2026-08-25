@@ -22,10 +22,26 @@ def run_task(task, timeout=900):
                        cwd=LIAM, capture_output=True, text=True, timeout=timeout)
     wall = (time.time() - t0) * 1000
     sp = None
+    probe = task[:40]
     for _ in range(20):
         new = [f for f in os.listdir(SESS) if f.endswith(".jsonl") and f not in before]
-        if new:
-            sp = os.path.join(SESS, sorted(new)[-1]); break
+        cands = []
+        for f in sorted(new):
+            fp = os.path.join(SESS, f)
+            try:
+                first = None
+                for line in open(fp):
+                    d = json.loads(line)
+                    if d.get("kind") == "user_message":
+                        first = d.get("content", ""); break
+                if first and probe in first:
+                    cands.append(fp)
+            except Exception:
+                pass
+        if cands:
+            sp = cands[-1]; break
+        if not new and _ > 8:
+            break
         time.sleep(0.5)
     ans = final_asst(sp) if sp else ""
     return {"wall_ms": round(wall, 1), "answer": ans, "rc": r.returncode, "session": os.path.basename(sp) if sp else None}
