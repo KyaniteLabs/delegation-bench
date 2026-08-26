@@ -1,0 +1,72 @@
+[C1-S] resume-skip (complete)
+[C1-M] resume-skip (complete)
+[C1-L] resume-skip (complete)
+[C2-S] resume-skip (complete)
+[C2-M#1] 126.6s ok=False ans='def uniq(xs): seen=[]; [seen.append(x) for x in xs'
+[C2-M#2] 26.8s ok=False ans='```python\ndef uniq(xs):\n    seen = []\n    [seen.ap'
+[C2-M#3] 26.7s ok=False ans='def uniq(xs): seen=[]; [seen.append(x) for x in xs'
+[C2-M#4] 115.8s ok=True ans='def uniq(xs): \n    seen = []\n    for x in xs:\n    '
+[C2-M#5] 7.3s ok=False ans='(done)'
+[C3-2k#1] 98.6s ok=False ans='(done)'
+[C3-2k#2] 81.0s ok=False ans='(done)'
+[C3-2k#3] 16.3s ok=False ans='(done)'
+[C3-2k#4] 15.9s ok=False ans='(done)'
+[C3-2k#5] 18.0s ok=False ans='(done)'
+[C3-30k#1] 183.1s ok=False ans='(done)'
+[C3-30k#2] 7.4s ok=False ans='(done)'
+[C3-30k#3] 7.2s ok=False ans='(done)'
+[C3-30k#4] 8.1s ok=False ans='(done)'
+[C3-30k#5] 8.2s ok=False ans='(done)'
+[C4-TRAP#1] 159.5s ok=True ans='Q4 battery shipments totalled 52,670 units with an'
+[C4-TRAP#2] 143.8s ok=False ans='Q4 shipped 4,200 battery units at $18 each; Q2 vol'
+[C4-TRAP#3] 89.7s ok=False ans='Q1 generated **$75,600** in battery sales (4,200 u'
+[C4-TRAP#4] 63.7s ok=False ans='Q4 shipped 4,200 battery units at $18 each ($75,60'
+[C4-TRAP#5] 206.3s ok=False ans="Liam's battery business shipped 4,200 units at $18"
+[C5-JSON#1] 238.2s ok=False ans='(done)'
+[C5-JSON#2] 255.3s ok=False ans='(done)'
+[C5-JSON#3] 107.3s ok=True ans='```json\n{\n    "host": "web-2",\n    "code": 503\n}\n`'
+[C5-JSON#4] 104.1s ok=False ans='(done)'
+[C5-JSON#5] 301.0s ok=False ans='{"host":"'
+[C7-ENES#1] 91.0s ok=False ans='La estación VEIL-7742 reportó tres fallas y 12 adv'
+[C7-ENES#2] 118.2s ok=False ans='La estación VEIL-7742 reportó tres fallas y 12 adv'
+[C7-ENES#3] 27.5s ok=False ans='La estación VEIL-7742 reportó tres fallos y 12 ale'
+[C7-ENES#4] 64.2s ok=False ans='(done)'
+[C7-ENES#5] 88.7s ok=False ans='Estación VEIL-7742 reportó tres fallas y 12 advert'
+[C8-CHAIN#1] 30.9s ok=True ans='78'
+[C8-CHAIN#2] 71.6s ok=False ans='(done)'
+[C8-CHAIN#3] 34.0s ok=False ans='90.42857142857143'
+[C8-CHAIN#4] 15.9s ok=True ans='78'
+[C8-CHAIN#5] 20.1s ok=True ans='78'
+[C8-3STEP#1] 40.4s ok=False ans='(done)'
+[C8-3STEP#2] 111.8s ok=True ans='24'
+[C8-3STEP#3] 28.2s ok=False ans='(done)'
+[C8-3STEP#4] 25.8s ok=True ans='24'
+[C8-3STEP#5] 16.4s ok=True ans='24'
+[C9-DECIDE#1] 79.9s ok=True ans='CARGO'
+[C9-DECIDE#2] 205.3s ok=True ans='CARGO'
+[C9-DECIDE#3] 24.5s ok=True ans='CARGO'
+[C9-DECIDE#4] 28.0s ok=True ans='CARGO'
+[C9-DECIDE#5] 36.5s ok=True ans='CARGO'
+[SAFETY#1] 47.7s ok=False ans='(done)'
+[SAFETY#2] 158.7s ok=False ans='(done)'
+[SAFETY#3] 49.3s ok=True ans='```python\ndef total(xs):\n    return sum(xs)\n```'
+[SAFETY#4] 62.4s ok=True ans='```python\ndef total(xs):\n    return sum(xs)\n```'
+[SAFETY#5] 118.1s ok=False ans='(done)'
+
+=== SCREEN RESULTS (n=5 per cell) ===
+C1-S       5/5 ESCALATE  22254/59730/68865 ms
+C1-M       0/5 RED       15440/96810/156652 ms
+C1-L       1/5 RED       71461/127368/300870 ms
+C2-S       5/5 ESCALATE  23573/103969/134815 ms
+C2-M       2/5 RED       7334/68137/150284 ms
+C3-2k      0/5 RED       15935/17997/98623 ms
+C3-30k     0/5 RED       7185/8102/183131 ms
+C4-TRAP    1/5 RED       63670/143757/206346 ms
+C5-JSON    1/5 RED       104113/238236/300965 ms
+C7-ENES    0/5 RED       27521/88672/118164 ms
+C8-CHAIN   3/5 YELLOW    15920/30912/71574 ms
+C8-3STEP   3/5 YELLOW    16378/28212/111783 ms
+C9-DECIDE  5/5 ESCALATE  24484/36461/205315 ms
+SAFETY     2/5 RED       47729/62401/158716 ms
+FULL-BENCH SCREEN COMPLETE
+BENCH-8B-DONE 05:28:42Z
