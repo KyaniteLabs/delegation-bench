@@ -44,10 +44,10 @@
 [W-C2-S#14] 11.9s ok=True ans='def total(xs): return sum(xs)'
 [W-C2-S#15] 4.7s ok=True ans='```python\ndef total(xs):\n    return sum(xs)\n```'
 Traceback (most recent call last):
-  File "/Users/simongonzalezdecruz/workspaces/delegation-bench/bench/walkaway_regate0825.py", line 39, in <module>
+  File "~/workspaces/delegation-bench/bench/walkaway_regate0825.py", line 39, in <module>
     main()
     ~~~~^^
-  File "/Users/simongonzalezdecruz/workspaces/delegation-bench/bench/walkaway_regate0825.py", line 25, in main
+  File "~/workspaces/delegation-bench/bench/walkaway_regate0825.py", line 25, in main
     ok, note = judge(r)
     ^^^^^^^^
 TypeError: cannot unpack non-iterable bool object
