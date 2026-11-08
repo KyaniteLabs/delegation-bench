@@ -50,6 +50,6 @@ The machine earned walk-away certification on every representative cell tested.
 - doc-QA 130k: wall >15min/trial + thermal edge (size ceiling; product now fast-fails with estimate)
 - vision form: 12/15 (tiny-text transcription; one dropped letter in an email address - labeled, not hidden)
 
-## TOTAL: ~470 trials, 29 cells, 9 job classes, one front door, zero cherry-picking.
+## TOTAL: 495 trials, 29 cells, 9 job classes, one front door, zero cherry-picking.
 All raw JSONL committed beside this card. Judge corrections documented; golden
 regression cases shipped. Times are full-product (engine+model+wire counted).
