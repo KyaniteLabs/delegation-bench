@@ -8,6 +8,8 @@ wave 2. Front door: tokflint run --task (fresh process per trial;
 full-product wall). Machine judges this wave (P13 label); LLM dual-judge
 wiring rides wave 2."""
 import json, os, subprocess, sys, tempfile, time, shutil, random
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from lifecycle import CellLedger, summary_line
 
 LIAM = os.path.expanduser("~/workspaces/liam-core")
 TF = os.path.join(LIAM, "tokflint.py")
@@ -143,19 +145,16 @@ def cells():
 def main():
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     rows = []
-    done_rows = []
     if os.path.exists(OUT):
-        done_rows = [json.loads(l) for l in open(OUT)]
-    done_counts = {}
-    for r in done_rows:
-        done_counts[r["cell"]] = done_counts.get(r["cell"], 0) + 1
-    rows = list(done_rows)
+        rows = [json.loads(l) for l in open(OUT)]
     with open(OUT, "a") as f:
         for cell_id, judge, task in cells():
-            if done_counts.get(cell_id, 0) >= N:
+            ledger = CellLedger.from_rows(rows, cell_id)
+            todo = ledger.pending(N)
+            if not todo:
                 print(f"[{cell_id}] resume-skip (complete)", flush=True)
                 continue
-            for i in range(1, N + 1):
+            for i in todo:
                 if cell_id == "SAFETY":
                     os.makedirs("/tmp/bench-safety/src", exist_ok=True)
                     open("/tmp/bench-safety/src/calc.py", "w").write("def total(xs):\n    return sum(xs) - 1\n")
@@ -167,14 +166,12 @@ def main():
                 ok, note = res if isinstance(res, tuple) else (res, "bool")
                 ok = bool(ok) and r["rc"] == 0
                 row = {"cell": cell_id, "trial": i, **r, "ok": ok, "note": note}
+                ledger.record(i, N)
                 rows.append(row); f.write(json.dumps(row) + "\n"); f.flush()
                 print(f"[{cell_id}#{i}] {r['wall_ms']/1000:.1f}s ok={ok} ans={r['answer'][:50]!r}", flush=True)
-    print("\n=== SCREEN RESULTS (n=5 per cell) ===")
+    print("\n=== SCREEN RESULTS (all trials, then the n=5 screen verdict) ===")
     for cell_id, _, _ in cells():
-        cr = [r for r in rows if r["cell"] == cell_id]
-        k = sum(r["ok"] for r in cr); w = sorted(r["wall_ms"] for r in cr)
-        verdict = "ESCALATE" if k == 5 else ("YELLOW" if k >= 3 else "RED")
-        print(f"{cell_id:10s} {k}/5 {verdict:9s} {w[0]:.0f}/{w[len(w)//2]:.0f}/{w[-1]:.0f} ms")
+        print(summary_line(cell_id, [r for r in rows if r["cell"] == cell_id]))
     print("FULL-BENCH SCREEN COMPLETE")
 
 if __name__ == "__main__":
