@@ -45,7 +45,10 @@ ck("dt-full-yellow13", decide([True]*5 + [True]*8 + [False]*2)[0], "YELLOW")
 ck("dt-full-yellow14", decide([True]*5 + [True]*9 + [False]*1)[0], "YELLOW")
 ck("dt-cand", decide([True]*15)[0], "CAPABILITY-GREEN-CANDIDATE")
 ck("dt-autonomy", decide([True]*15, [True]*15)[0], "AUTONOMY-GREEN")
-ck("dt-caponly", decide([True]*15, [True]*14)[0], "CAPABILITY-GREEN")
+# confirmation 14/15 (one failed trial) -> capability only. The old line passed
+# [True]*14 (a 14-trial run still in progress); that is now CANDIDATE/pending,
+# see tests/test_lifecycle.py::partial confirmation.
+ck("dt-caponly", decide([True]*15, [True]*14 + [False])[0], "CAPABILITY-GREEN")
 
 # --- mock product + machine judge hooks ---
 ck("mock-pass", mock_submit({"expect": True})["ok"], True)
