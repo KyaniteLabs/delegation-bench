@@ -78,9 +78,14 @@ eligible until a clean full run per design §5.
 
 ## VISION RE-GATE (2026-08-25 ~16:3xZ, CTO-028; card section added night-of by CTO-8)
 
-Raw: vision-cells-regate-2026-08-25.jsonl (30 trials, n=5/cell, front door):
+30 trials recorded locally, raw file not retained (n=5/cell, front door).
+The previously cited `vision-cells-regate-2026-08-25.jsonl` is not in the
+repository or its history and was not recovered from available author records.
+The following historical summary is unverified, not raw-backed certification:
 V-BAR 5/5, V-LINE 5/5, V-PROG 5/5, V-TAB 5/5, V-TERM 5/5, V-FORM 4/5.
 5/6 cells green — V-FORM = the certified OCR near-miss class (tiny print),
 labeled honestly, matching the certified card's form-cell finding.
-Combined re-gate total: 350 capability + 90 walk-away + 30 vision = 470 trials;
-grand total with the certified run: 965.
+Verifiable re-gate total: 350 capability + 90 walk-away = 440 trials;
+grand total with the 495-trial certified run: 935 verifiable trials.
+The former 470/965 totals included the 30 locally reported vision trials;
+those trials are excluded from verifiable totals, not reconstructed or re-run.

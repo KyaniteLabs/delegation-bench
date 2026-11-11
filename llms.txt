@@ -7,9 +7,11 @@
 ## What this is
 - A benchmark that answers: which of your jobs can you safely delegate to a
   local AI model, and how sure are you?
-- 9 job classes, 29 cells, 965 measured trials (495 certified 08-22 + 470 re-gate at deeper n 08-25), certified exact-statistical
+- 9 job classes, 29 cells, 935 verifiable trials (495 certified 08-22 + 440 re-gate at deeper n 08-25), certified exact-statistical
   floors (not vibes), a walk-away autonomy tier, hidden tests, planted traps,
   sabotage cells, sealed holdouts.
+- An additional 30 vision re-gate trials were recorded locally, raw file not retained;
+  the historical summary is unverified and excluded from the totals above.
 - Open source (MIT). Point it at your own model and product.
 
 ## Key facts
