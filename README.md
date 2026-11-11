@@ -8,8 +8,8 @@ $1,400 Strix Halo mini-PC and publishes every number with its methodology
 
 PRE-REGISTRATION NOTICE: the design below was published BEFORE any run
 (2026-08-21); nothing was tuned after the fact. Measurement has since landed —
-see Status and the certified cards under `results/`; every raw log is in the
-repo beside this file, exactly as promised here.
+see Status and the certified cards under `results/`. Committed raw logs are
+beside the cards; the vision re-gate raw-file gap is disclosed below.
 
 THE QUESTION IT ANSWERS: which of the operator's real jobs can be safely
 delegated — consistently — to a local model (Qwen3.8-27B on a $1,400 Strix
@@ -48,15 +48,19 @@ MIT. The design is the artifact; the audit trail (internal review + external
 audit + field research) is summarized in DESIGN.md's lineage block.
 
 ## Status
-Stage 3 SHIPPED: 965 measured trials (495 certified 08-22 + 470 re-gate at
-deeper n 08-25) across the 9 job classes and 29 cells. Read the certified
+Stage 3 SHIPPED: 935 verifiable trials (495 certified 08-22 + 440 re-gate at
+deeper n 08-25) across the 9 job classes and 29 cells. An additional 30 vision
+re-gate trials were recorded locally, raw file not retained; their historical
+summary is not independently verifiable and is excluded from these totals.
+Read the certified
 cards — `results/CARD-2026-08-22.md`, `results/FINAL-CARD-2026-08-22.md`,
 `results/CARD-RE-GATE-2026-08-25.md` — and `llms.txt` for the full trial
 accounting. The judge kit passed its golden-fixture calibration
 (`judges/golden.json`, `tests/test_golden.py`) before scoring real runs. The
 walk-away tier went 6/6 GREEN at 40/40 (92.8% floors); an 8B-A1B Mac-class
-cross-model screen (08-26) went 28/70 and was killed at criterion 2 — no new
+cross-model screen (08-26) went 28/74 and was killed at criterion 2 — no new
 routable classes vs the 27B baseline.
+The 74 committed rows include a C2-M overrun to 9 trials rather than 5.
 
 The runner core is BUILT AND SELF-TESTED (66 checks green across core, kits,
 and adversarial suites; end-to-end dry run through a mock product works; the
