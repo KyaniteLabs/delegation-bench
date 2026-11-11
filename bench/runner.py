@@ -80,29 +80,8 @@ def machine_judge(result, task, workspace=None, sys_paths=()):
     return (str(expect) in str(result.get("output", ""))), "contains"
 
 # --- the single decision table (pre-registered; design section 5) ---
-def decide(trial_passes, confirmation_passes=None):
-    """trial_passes: list of bool (screen then full merged, in order)."""
-    n5 = trial_passes[:5]
-    if sum(n5) <= 2:
-        return "RED", "screen <=2/5"
-    if sum(n5) in (3, 4) and len(trial_passes) == 5:
-        return "YELLOW", "screen 3-4/5 (confirmation pending)"
-    if sum(n5) == 5 and len(trial_passes) == 5:
-        return "ESCALATE", "screen 5/5 - escalate to n=15"
-    n15 = trial_passes[:15]
-    if len(n15) < 15:
-        return "INCOMPLETE", f"{len(n15)}/15 trials"
-    p15 = sum(n15)
-    if p15 <= 12:
-        return "RED", f"{p15}/15"
-    if p15 in (13, 14):
-        return "YELLOW", f"{p15}/15"
-    # 15/15: capability-green candidate; autonomy needs a clean confirmation 15
-    if confirmation_passes is None:
-        return "CAPABILITY-GREEN-CANDIDATE", "15/15; confirmation run required"
-    if sum(confirmation_passes) == 15:
-        return "AUTONOMY-GREEN", "30/30"
-    return "CAPABILITY-GREEN", f"15/15 first run; confirmation {sum(confirmation_passes)}/15 (autonomy not earned)"
+# Lives in lifecycle.py with the named Verdict states and legal transitions.
+from lifecycle import decide  # noqa: E402  (re-exported for callers/tests)
 
 def run_cell(cell, dry):
     results = []

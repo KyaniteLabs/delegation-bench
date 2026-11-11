@@ -32,5 +32,8 @@ def adjudicate(a, b, tiebreak):
     """Majority of three (a, b, tiebreak) per question; disagreement rate
     reported (design: disagreement measured and adjudicated)."""
     disagree = sum(1 for q in a if a[q] != b[q])
-    final = {q: (a[q] or b[q] or tiebreak.get(q, False)) if a[q] != b[q] else a[q] for q in a}
+    # a == b: that is already a 2-of-3 majority. a != b: the votes are 1-1,
+    # so the tiebreak vote decides; no tiebreak vote counts as a fail.
+    # (Old code used `a[q] or b[q] or ...`, which is always True on a split.)
+    final = {q: a[q] if a[q] == b[q] else bool(tiebreak.get(q, False)) for q in a}
     return final, disagree / max(len(a), 1)
