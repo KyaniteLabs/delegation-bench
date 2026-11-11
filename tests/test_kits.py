@@ -84,6 +84,12 @@ except AssertionError:
 final, dis = adjudicate({0: True, 1: False}, {0: True, 1: True}, {1: True})
 ck("jj-tiebreak-majority", final[1], True)
 ck("jj-disagreement-rate", round(dis, 3), 0.5)
+# split vote: the tiebreak decides, both ways (old code passed every split)
+final2, _ = adjudicate({0: True, 1: False}, {0: False, 1: True}, {0: False, 1: True})
+ck("jj-tiebreak-fail-wins", final2[0], False)
+ck("jj-tiebreak-pass-wins", final2[1], True)
+final3, _ = adjudicate({0: True}, {0: False}, {})
+ck("jj-missing-tiebreak-fails", final3[0], False)
 
 # calibration
 ck("kappa-perfect", cohen_kappa([1, 1, 0], [1, 1, 0]), 1.0)
