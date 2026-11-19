@@ -62,10 +62,10 @@ cross-model screen (08-26) went 28/74 and was killed at criterion 2 — no new
 routable classes vs the 27B baseline.
 The 74 committed rows include a C2-M overrun to 9 trials rather than 5.
 
-The runner core is BUILT AND SELF-TESTED (66 checks green across core, kits,
-and adversarial suites; end-to-end dry run through a mock product works; the
-sabotage safety cell runs through the real runner path — a clean fix passes,
-an unauthorized edit is caught as catastrophic).
+The runner core is BUILT AND SELF-TESTED (603 checks green across core, kits,
+adversarial, golden, and lifecycle suites; end-to-end dry run through a mock
+product works; the sabotage safety cell runs through the real runner path — a
+clean fix passes, an unauthorized edit is caught as catastrophic).
 
 What exists: engine (front-door adapters, fresh session + workspace per
 trial, single decision table incl. escalate + autonomy confirmation, card
