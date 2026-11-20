@@ -52,16 +52,24 @@ def main():
     ap.add_argument("--out", default="fixtures/dev")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
-    os.makedirs(args.out, exist_ok=True)
+    plan = []
     made = 0
     for pt in LADDERS["C1"]:
         for t in _code(pt):
-            json.dump(t, open(os.path.join(args.out, f"C1-L{pt}-{made}.json"), "w")); made += 1
+            plan.append((os.path.join(args.out, f"C1-L{pt}-{made}.json"), t)); made += 1
     for pt in LADDERS["C3"]:
         tasks, _ = _docqa(pt)
         for t in tasks:
-            json.dump(t, open(os.path.join(args.out, f"C3-L{pt}-{made}.json"), "w")); made += 1
-    json.dump(_underspecified(), open(os.path.join(args.out, "C1-AMBIG.json"), "w")); made += 1
+            plan.append((os.path.join(args.out, f"C3-L{pt}-{made}.json"), t)); made += 1
+    plan.append((os.path.join(args.out, "C1-AMBIG.json"), _underspecified())); made += 1
+    if args.dry_run:
+        for path, _obj in plan:
+            print(f"DRY-RUN would write {path}")
+        print(f"dry-run: {made} dev fixtures planned -> {args.out} (nothing written)")
+        return
+    os.makedirs(args.out, exist_ok=True)
+    for path, obj in plan:
+        json.dump(obj, open(path, "w"))
     print(f"generated {made} dev fixtures -> {args.out}")
 
 if __name__ == "__main__":
