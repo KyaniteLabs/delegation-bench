@@ -4,7 +4,15 @@ import hashlib, json, os, sys
 
 def seal(fixtures_dir, manifest_out):
     """Hash every fixture file; write the manifest. Fail if manifest exists
-    and any hash changed (tamper-evidence)."""
+    and any hash changed (tamper-evidence).
+
+    Refuse (exit 3, nothing written, no claim printed) a fixtures_dir that is
+    not an existing directory or that holds no files: an empty n=0 manifest
+    seals nothing and is never a verified seal.
+    Exit codes: 0 sealed or verified, 2 tamper mismatch, 3 refused."""
+    if not os.path.isdir(fixtures_dir):
+        print(f"SEAL REFUSED — not an existing directory: {fixtures_dir}", file=sys.stderr)
+        return 3
     entries = {}
     for root, _, files in os.walk(fixtures_dir):
         for f in sorted(files):
@@ -12,6 +20,9 @@ def seal(fixtures_dir, manifest_out):
             rel = os.path.relpath(path, fixtures_dir)
             h = hashlib.sha256(open(path, "rb").read()).hexdigest()
             entries[rel] = h
+    if not entries:
+        print(f"SEAL REFUSED — no fixture files under {fixtures_dir}; an empty n=0 manifest is not a seal", file=sys.stderr)
+        return 3
     manifest = {"n": len(entries), "files": entries}
     if os.path.exists(manifest_out):
         old = json.load(open(manifest_out))
