@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Self-tests for the bench core: stats exactness (verified numbers), the
-decision table's every path, seal roundtrip + tamper detection, and an
-end-to-end dry run through the mock product. PATTERN: no GPU, no network."""
+decision table's every path, seal roundtrip + tamper detection + refusal of
+missing/empty input, and an end-to-end dry run through the mock product.
+PATTERN: no GPU, no network."""
 import json, os, shutil, subprocess, sys, tempfile
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "bench"))
@@ -67,6 +68,32 @@ ck("seal-verify-unchanged", r2.returncode, 0)
 open(os.path.join(fx, "a.json"), "w").write('{"tampered": true}')
 r3 = subprocess.run([sys.executable, os.path.join(os.path.dirname(__file__), "..", "bench", "seal.py"), fx, man], capture_output=True, text=True)
 ck("seal-tamper-detected", r3.returncode, 2)
+# Missing or empty input is refused BEFORE any seal or verification claim:
+# os.walk yields nothing for an absent path, so the tool used to write an n=0
+# manifest and then report SEAL VERIFIED for that same absent input.
+# The three runs above are the paired positive controls.
+SEAL = os.path.join(os.path.dirname(__file__), "..", "bench", "seal.py")
+def run_seal(fixtures, manifest):
+    return subprocess.run([sys.executable, SEAL, fixtures, manifest], capture_output=True, text=True)
+def claimed(r):  # a seal or verification claim on either stream
+    return "SEAL VERIFIED" in r.stdout + r.stderr or "SEALED" in r.stdout + r.stderr
+notdir = os.path.join(tmp, "not-a-dir"); open(notdir, "w").write("{}")
+empty = os.path.join(tmp, "empty-dir"); os.makedirs(empty)
+for label, path, reason in (("missing-dir", os.path.join(tmp, "does-not-exist"), "not an existing directory"), ("file-path", notdir, "not an existing directory"), ("empty-dir", empty, "no fixture files")):
+    man_i = os.path.join(tmp, label + ".json")
+    r = run_seal(path, man_i)
+    ck(f"seal-{label}-refused-exit3", r.returncode, 3)
+    ck(f"seal-{label}-reason-on-stderr", reason in r.stderr, True)
+    ck(f"seal-{label}-writes-no-manifest", os.path.exists(man_i), False)
+    ck(f"seal-{label}-no-claim", claimed(r), False)
+man_n0 = os.path.join(tmp, "n0.json")  # what the tool used to leave behind for an absent input
+json.dump({"n": 0, "files": {}}, open(man_n0, "w"), indent=1, sort_keys=True)
+n0_before = open(man_n0, "rb").read()
+r6 = run_seal(os.path.join(tmp, "does-not-exist"), man_n0)  # the audit's second call
+ck("seal-n0-manifest-not-verified-absent-dir", r6.returncode, 3); ck("seal-n0-manifest-no-claim-absent-dir", claimed(r6), False)
+r7 = run_seal(empty, man_n0)
+ck("seal-n0-manifest-not-verified-empty-dir", r7.returncode, 3); ck("seal-n0-manifest-no-claim-empty-dir", claimed(r7), False)
+ck("seal-n0-manifest-left-untouched", open(man_n0, "rb").read() == n0_before, True)
 shutil.rmtree(tmp)
 
 # --- end-to-end dry run through the mock product ---
